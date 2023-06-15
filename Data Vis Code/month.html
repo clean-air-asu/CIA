@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>CIA</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="js/monthly.js"></script>
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-1">School: </div>
+                <div class="col-3">
+                    <!-- add your select here-->
+                    <select name="school-select" id="school-select" style="width: 100%;" onchange="changeCheckBox()">
+                        <option value="CBHS" selected>CBHS</option>
+                        <option value="RDRK">RDRK</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <!-- add your select here-->
+                    <select name="PM-select" id="PM-select" style="width: 100%;" onchange="changePM(this.value)">
+                        <option value="PM25" selected>PM 2.5</option>
+                        <option value="PM1">PM 1</option>
+                        <option value="PM10">PM 10</option>
+                    </select>
+                </div>
+                <div class="col-3">
+                    <div class="multiselect" style="width: 100%;">
+                        <div class="selectBox" onclick="showCheckboxes()">
+                            <select>
+                                <option>Select Month</option>
+                            </select>
+                            <div class="overSelect" id="overSelect">
+                            </div>
+                        </div>
+                        <div id="checkboxes">
+                            <label for="baseline">
+                                <input type="checkbox" id="baseline" onclick="changeCheckBox()"/>Baseline
+                            </label>
+                            <label for="baseline-2">
+                                <input type="checkbox" id="baseline-2" onclick="changeCheckBox()"/>RDRK - Baseline-2
+                            </label>
+                            <label for="dec">
+                                <input type="checkbox" id="dec" onclick="changeCheckBox()"/>December
+                            </label>
+                            <label for="jan">
+                                <input type="checkbox" id="jan" onclick="changeCheckBox()"/>January
+                            </label>
+                            <label for="feb">
+                                <input type="checkbox" id="feb" onclick="changeCheckBox()"/>Febuary
+                            </label>
+                            <label for="mar">
+                                <input type="checkbox" id="mar" onclick="changeCheckBox()"/>March
+                            </label>
+                            <label for="mar">
+                                <input type="checkbox" id="apr" onclick="changeCheckBox()"/>April
+                            </label>
+                            <label for="mar">
+                                <input type="checkbox" id="may" onclick="changeCheckBox()"/>May
+                            </label>
+                            <label for="all">
+                                <input type="checkbox" id="all" onclick="changeCheckBox()"/>All Months Combined Data
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            <div>
+                <h4 id="header" style=" margin-top: 40px;
+                margin-left: 500px;
+                margin-bottom: -40px; "></h4>
+            </div>
+            <div id="my_dataviz" style="margin-left: -100px;"></div>
+        </div> 
+    </body>
+</html> 
