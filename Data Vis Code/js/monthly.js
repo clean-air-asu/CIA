@@ -80,12 +80,12 @@ document.addEventListener('DOMContentLoaded', function () {
         .attr('transform', 'rotate(-90)')
         .text('PM 2.5 (ug/m3)');
   
-    Promise.all([d3.csv('data/Monthly-Average-CBHS.csv'), d3.csv('data/Monthly-Average-RDRK.csv')])
+    Promise.all([d3.csv('data/Monthly-Average-SCHOOL-1.csv'), d3.csv('data/Monthly-Average-SCHOOL-2.csv')])
         .then((values) => {
-            CBHS = values[0];
-            RDRK = values[1];
+            SCHOOL1 = values[0];
+            SCHOOL2 = values[1];
 
-            CBHS.forEach(element => {
+            SCHOOL1.forEach(element => {
                 element.ID = +element.ID;
                 element['Bs PM-1'] = +element['Bs PM-1'];
                 element['Jan PM-1'] = +element['Jan PM-1'];
@@ -119,7 +119,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 element['all PM-10'] = +element['all PM-10'];
             });
 
-            RDRK.forEach(element => {
+            SCHOOL2.forEach(element => {
                 element.ID = +element.ID;
                 element['Bs PM-1'] = +element['Bs PM-1'];
                 element['Jan PM-1'] = +element['Jan PM-1'];
@@ -157,7 +157,7 @@ document.addEventListener('DOMContentLoaded', function () {
                 element['BS2 PM-10'] = +element['BS2 PM-10'];
             });
 
-            data = { 'CBHS': CBHS, 'RDRK': RDRK };
+            data = { 'SCHOOL-1': SCHOOL1, 'SCHOOL-2': SCHOOL2 };
 
             document.getElementById('baseline').checked = true;
             document.getElementById('baseline-2').checked = false;
@@ -224,7 +224,7 @@ const drawLineGraph = (option, months) => {
     });
 
     ticks = 0;
-    if (option == 'CBHS') {
+    if (option == 'SCHOOL-1') {
         xScale.domain([1, 38]);
         ticks = 38;
     } else {
