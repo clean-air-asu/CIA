@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <title>CIA</title>
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" />
+        <link rel="stylesheet" href="css/main.css">
+        <script src="https://d3js.org/d3.v7.min.js"></script>
+        <script src="js/ach-combined.js"></script>
+        <style>
+            body {font-family: Times, Times New Roman, serif}
+        </style>
+    </head>
+    <body>
+        <div class="container">
+            <div class="row" style="margin-top: 50px;">
+                <div class="col-3">
+                    <select name="CR-Box" id="CR-Box" style="width: 100%;" onchange="drawBarGraph(this.value)">
+                        <option value="CR" selected>CR-Box On</option>
+                        <option value="NoCR">CR-Box Off</option>
+                    </select>
+                </div>
+            </div>
+            <div style="margin-left: -150px;" id="my_dataviz">         
+            </div>
+        </div> 
+    </body>
+</html> 
