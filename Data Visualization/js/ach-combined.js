@@ -265,7 +265,7 @@ const bars = (array,dash1,dash2,option) =>{
     let offset = -15;
     let y = -5;
     let horizontalLineOffset = 2.5;
-    
+    let x = -400;
     array.forEach(e => {
         const em = g.selectAll(e)
         .data(data);
@@ -282,8 +282,8 @@ const bars = (array,dash1,dash2,option) =>{
             .style("stroke-dasharray", (`${dash1},${dash2}`));
 
             g.append('line')
-                .attr('x1',2000)
-                .attr('x2',2200)
+                .attr('x1',2000+x)
+                .attr('x2',2200+x)
                 .attr('y1',y+7)
                 .attr('y2',y+7)
                 .attr(`stroke`, `${colorMap[e]}`)
@@ -301,8 +301,8 @@ const bars = (array,dash1,dash2,option) =>{
             .attr(`stroke-width`,strokeWidth);
 
             g.append('line')
-            .attr('x1',2000)
-            .attr('x2',2200)
+            .attr('x1',2000+x)
+            .attr('x2',2200+x)
             .attr('y1',y+7)
             .attr('y2',y+7)
             .attr(`stroke`, `${colorMap[e]}`)
@@ -311,7 +311,7 @@ const bars = (array,dash1,dash2,option) =>{
         }
         
         g.append(`text`)
-        .attr(`x`, 2230)
+        .attr(`x`, 2230+x)
         .attr(`y`, y+13)
         .style(`font`, fontSize)
         .attr('class','lebal')
@@ -319,7 +319,11 @@ const bars = (array,dash1,dash2,option) =>{
         .text(`${labelMap[e]}`);
 
         y += 30;
-
+        
+        if (y > 170){
+            x = 0;
+            y = -5;
+        }
         
         g
         .selectAll("uperHorizonatlLine")
