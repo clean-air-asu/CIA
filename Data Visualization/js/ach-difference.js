@@ -115,8 +115,8 @@ document.addEventListener(`DOMContentLoaded`, function () {
         .attr('transform', 'rotate(-90)')
         .text('Air Exchange Rate Per Hour (ACH)'); 
    
-    // d3.csv(`data/ach-difference-school-2.csv`)
-    d3.csv(`data/ach-difference.csv`)
+    d3.csv(`data/ach-difference-school-2.csv`)
+    // d3.csv(`data/ach-difference.csv`)
     .then(d => {
         data = d; 
         data.forEach(element => {
@@ -138,7 +138,7 @@ const drawBarGraph = () => {
     xAxis.call(d3.axisBottom(xScale)).style(`font`, axisFont)
         .call(g => g.selectAll(`.tick line`).remove());
     
-    yAxis.call(d3.axisRight(yScale)
+    yAxis.call(d3.axisRight(yScale).ticks(7)
     .tickSize(width - margin.left - margin.right)
     ).style(`font`, axisFont)
     .call(g => g.select(`.domain`)
@@ -161,9 +161,10 @@ const bars = (array) =>{
     d3.selectAll('.ach, .lebal').remove();
 
     let offset = -15;
-    let y = -5;
+    let y = -9;
     
-    let x = -300
+    let x = -1000
+    let i = 1;
     array.forEach(e => {
         console.log(e);
         const em = g.selectAll('ach')
@@ -196,11 +197,18 @@ const bars = (array) =>{
         .text(`${labelMap[e]}`);
 
         y += 30;  
-        if (y > 170){
-            x = 0;
-            y = -5;
+        // if (y > 170){
+        //     x = 0;
+        //     y = -5;
+        // }
+        
+        if((i % 3) == 0){
+            y = -8
+            x += 300;
         }
-          
+
+        i++;
+
         offset +=8;
     });
 }

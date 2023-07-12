@@ -94,14 +94,12 @@ document.addEventListener('DOMContentLoaded', function () {
 
             baseline.forEach(element => {
                     element.PM25 = +element.PM25;
-                    element.classroom = +element.classroom;
                     element.Id = +element.Id;
             });
 
             week.forEach(element => {
                     element.PM25 = +element.PM25;
-                    element.classroom = +element.classroom;
-                    element.Id = +element.classroom;
+                    element.Id = +element.Id;
             });
 
             data = [week];

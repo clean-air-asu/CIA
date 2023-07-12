@@ -180,7 +180,7 @@ const drawBarGraph = (data) => {
     console.log(subgroups);
     const color = d3.scaleOrdinal()
     .domain(subgroups)
-    .range(['#F533FF','#69FF24','#F5FF3C','#FFB134','#FF6868','#FF3333']);
+    .range(['#69FF24','#F5FF3C','#FFB134','#FF6868','#FF3333','#F533FF']);
 
     console.log(color);
 

@@ -85,8 +85,7 @@ yAxis.append('text')
         .text('PM 10 (ug/m3)');
 
     
-    d3.csv(`data/MOD-PM-00571.csv`).then(data => {
-            //data/MOD-PM-00571.csv
+    d3.csv(`data/Claasroom-ID-40.csv`).then(data => {
             data.forEach(element => {
                     element.Timestamp = new Date(element.Timestamp);
                     element.PM10 = +element.PM10;
