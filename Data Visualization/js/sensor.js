@@ -11,22 +11,20 @@ const innerHeight = height - margin.bottom - margin.top;
 const innerWidth = width - margin.left - margin.right;
 const xScale = d3.scaleTime()
         .range([0, innerWidth])
-        .domain([new Date('2023-06-29T10:44:30'), new Date('2023-06-29T14:20:30')]);
+        .domain([new Date('2023-07-12T12:50:00'), new Date('2023-07-12T17:35:00')]);
 
 const yScale = d3.scaleLinear()
         .range([innerHeight, 0])
-        .domain([0,1000]);
+        .domain([0,145]);
 
 const fontSize = '17px times';
 const fontFamily = 'Arial, Helvetica, sans-serif';
 const fontColor = 'black';
 const axisFont = '13px times';
 const circleRadius = 3;
-const air_gradient = '#007f7f';
+const air_gradient = 'Red';
 const US_AQI = '#9d00ff';
 const mod_pm = '#004eff';
-const radius = 2.5;
-
 
 document.addEventListener('DOMContentLoaded', function () {
 
@@ -83,14 +81,13 @@ yAxis.append('text')
         .attr(`x`, -30)
         .attr(`dy`, 4));
 
-Promise.all([d3.csv('data/Airgradient-06-29-2023.csv'),d3.csv('data/Mod-PM-06-29-2023.csv')])
+Promise.all([d3.csv('data/Airgradient-7-12-2023.csv'),d3.csv('data/Mod-PM-7-12-2023.csv')])
 .then( (values) => {
     airgradient = values[0];
     modPM = values[1];
 
     airgradient.forEach(element => {
         element.PM25 = +element['PM2.5 avg'];
-        element.US_AQI = +element['PM2.5 avg (US AQI)'];
         element.Date = new Date(element['Local Date/Time']);
     });
 
@@ -109,112 +106,67 @@ Promise.all([d3.csv('data/Airgradient-06-29-2023.csv'),d3.csv('data/Mod-PM-06-29
 
 const drawLineGraph = (airgradient,modPM) => {
 
-g.append("path")
-    .datum(airgradient)
-    .attr("fill", "none")
-    .attr("stroke", air_gradient)
-    .attr("stroke-width", 1.5)
-    .attr("d", d3.line()
-      .x((d) => xScale(d.Date))
-      .y((d) => yScale(d.PM25))
-    );
+const cross = g.selectAll('cross').data(airgradient);
 
-g.append("path")
-    .datum(airgradient)
-    .attr("fill", "none")
-    .attr("stroke", US_AQI)
-    .attr("stroke-width", 1.5)
-    .attr("d", d3.line()
-      .x((d) => xScale(d.Date))
-      .y((d) => yScale(d.US_AQI))
-    );
-
-// g.append("path")
-//     .datum(modPM)
-//     .attr("fill", "none")
-//     .attr("stroke", mod_pm)
-//     .attr("stroke-width", 1.5)
-//     .attr("d", d3.line()
-//       .x((d) => xScale(d.Date))
-//       .y((d) => yScale(d.PM25))
-//     );
-
-g.selectAll("dot")
-.data(airgradient)
-.join("circle")
-    .attr("cx", (d) => xScale(d.Date) )
-    .attr("cy", (d) => yScale(d.PM25) )
-    .attr("r", radius)
-    .style("fill", air_gradient);
-
-g.selectAll("dot")
-    .data(airgradient)
-    .join("circle")
-        .attr("cx", (d) => xScale(d.Date) )
-        .attr("cy", (d) => yScale(d.US_AQI) )
-        .attr("r", radius)
-        .style("fill", US_AQI);
+cross.join('g')
+    .attr('class', 'cross-airGradient')
+    .attr('id','cross')
+    .attr('transform', d => `translate(${xScale(d.Date)}, ${yScale(d.PM25)})`)
+    .call(g => {
+        g.each(function (d) {
+            d3.select(this).append('path')
+                .attr('d', d3.symbol().type(d3.symbolCross).size(80))
+                .attr('stroke', air_gradient)
+                .attr('fill', air_gradient)
+                .attr('transform', 'rotate(45)');
+        });
+    });
 
 g.selectAll("dot")
 .data(modPM)
 .join("circle")
     .attr("cx", (d) => xScale(d.Date) )
     .attr("cy", (d) => yScale(d.PM25) )
-    .attr("r", d => {
-        if (d.PM25 == 0){
-            return 0;
-        }
-        return radius;
-    })
-    .style("fill", mod_pm);
+    .attr("r", 2.5)
+    .style("fill", 'none')
+    .attr('stroke', mod_pm);
 
-y = 10;   
-g.append('line')
-    .attr('id', 'legend-lines')
-    .attr(`x1`, 1100)
-    .attr(`x2`, 1250)
-    .attr(`y1`, y)
-    .attr(`y2`, y)
-    .attr(`stroke`, air_gradient)
-    .attr(`stroke-width`, `2px`)
-    .style("stroke-dasharray", ("0, 0"));
+y = 20;
+
+const legend = g.selectAll('legend')
+.data(modPM);
+
+legend.join('g')
+.attr('class', 'legend')
+.attr('id','cross')
+.attr('transform', d => `translate(1235, ${y})`)
+.call(g => {
+    g.each(function (d) {
+        d3.select(this).append('path')
+            .attr('d', d3.symbol().type(d3.symbolCross).size(300))
+            .attr('stroke', air_gradient)
+            .attr('fill', air_gradient)
+            .attr('transform', 'rotate(45)');
+    });
+});
 
 g.append('text')
-    .attr('id', 'legene-text')
+    .attr('id', 'legend-text')
     .attr(`x`, 1270)
     .attr(`y`, y + 5)
     .text('Air Gradient PM 2.5'); 
     
-y = 30;   
-g.append('line')
-        .attr('id', 'legend-lines')
-        .attr(`x1`, 1100)
-    .attr(`x2`, 1250)
-        .attr(`y1`, y)
-        .attr(`y2`, y)
-        .attr(`stroke`, US_AQI)
-        .attr(`stroke-width`, `2px`)
-        .style("stroke-dasharray", ("0, 0"));
+y = 60; 
+g.append('circle')
+    .attr("cx", 1235 )
+    .attr("cy", y )
+    .attr("r", 10)
+    .style("fill", 'none')
+    .attr('stroke-width', 5)
+    .attr('stroke', mod_pm);
 
 g.append('text')
-        .attr('id', 'legene-text')
-        .attr(`x`, 1270)
-        .attr(`y`, y + 5)
-        .text('US AQI PM 2.5'); 
-
-y = 50;   
-g.append('line')
-    .attr('id', 'legend-lines')
-    .attr(`x1`, 1100)
-    .attr(`x2`, 1250)
-    .attr(`y1`, y)
-    .attr(`y2`, y)
-    .attr(`stroke`, mod_pm)
-    .attr(`stroke-width`, `2px`)
-    .style("stroke-dasharray", ("0, 0"));
-
-g.append('text')
-    .attr('id', 'legene-text')
+    .attr('id', 'legend-text')
     .attr(`x`, 1270)
     .attr(`y`, y + 5)
     .text('Modulair PM 2.5'); 
