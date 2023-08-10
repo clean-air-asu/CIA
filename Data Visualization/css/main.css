@@ -57,3 +57,7 @@ img {
     text-align: center; 
     text-shadow: 1px 1px rgb(197, 169, 222);
 }
+
+.yAxisFont ,.xAxisFont {
+    font-weight: bold;
+}
