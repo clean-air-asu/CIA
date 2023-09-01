@@ -205,6 +205,10 @@ circle.join('g')
                     if(d['Daily Mean PM10 Concentration'] <= 0){
                         return 'none'
                     }
+
+                    if(d.Date > new Date('2023-03-31')){
+                        return 'yellow';
+                    }
                     return out;
                 } );
         });
@@ -219,7 +223,7 @@ circle.join('g')
 //     .style("fill", 'none')
 //     .attr('stroke', out);
 stroke_width = 3;
-y = 60;
+y = 100;
 
 const legend = g.selectAll('legend')
 .data(data);
@@ -227,7 +231,7 @@ const legend = g.selectAll('legend')
 legend.join('g')
 .attr('class', 'legend')
 .attr('id','cross')
-.attr('transform', d => `translate(1235, ${y})`)
+.attr('transform', d => `translate(1205, ${y})`)
 .call(g => {
     g.each(function (d) {
         d3.select(this).append('path')
@@ -241,7 +245,7 @@ legend.join('g')
 
 g.append('text')
     .attr('id', 'legend-text')
-    .attr(`x`, 1270)
+    .attr(`x`, 1240)
     .attr(`y`, y + 5)
     .text('Classroom 40'); 
     
@@ -251,7 +255,7 @@ const circleLegend = g.selectAll('circleLegend').data(data);
 circleLegend.join('g')
     .attr('class', 'circleLegend')
     .attr('id','circleLegend')
-    .attr('transform', d => `translate(1235, ${y})`)
+    .attr('transform', d => `translate(1205, ${y})`)
     .call(g => {
         g.each(function (d) {
             d3.select(this).append('path')
@@ -264,11 +268,33 @@ circleLegend.join('g')
 
 g.append('text')
     .attr('id', 'legend-text')
-    .attr(`x`, 1270)
+    .attr(`x`, 1240)
     .attr(`y`, y + 5)
-    .text('Outdoor PM 10'); 
+    .text('Outdoor PM 10 AQS'); 
+y = 60
+    const circleLegend2 = g.selectAll('circleLegend2').data(data);
 
-y = 140;
+    circleLegend.join('g')
+        .attr('class', 'circleLegend2')
+        .attr('id','circleLegend2')
+        .attr('transform', d => `translate(1205, ${y})`)
+        .call(g => {
+            g.each(function (d) {
+                d3.select(this).append('path')
+                    .attr('d', d3.symbol().type(d3.symbolCircle).size(legendSize))
+                    .attr('stroke', 'black')
+                    .attr('stroke-width', 1)
+                    .attr('fill','yellow');
+            });
+        });
+    
+    g.append('text')
+        .attr('id', 'legend-text')
+        .attr(`x`, 1240)
+        .attr(`y`, y + 5)
+        .text('Outdoor PM 10 AirNow'); 
+
+y = 180;
 
 const Dlegend = g.selectAll('Dlegend')
 .data(data);
@@ -276,7 +302,7 @@ const Dlegend = g.selectAll('Dlegend')
 Dlegend.join('g')
 .attr('class', 'Dlegend')
 .attr('id','cross')
-.attr('transform', d => `translate(1235, ${y})`)
+.attr('transform', d => `translate(1205, ${y})`)
 .call(g => {
     g.each(function (d) {
         d3.select(this).append('path')
@@ -289,11 +315,11 @@ Dlegend.join('g')
 
 g.append('text')
     .attr('id', 'legend-text')
-    .attr(`x`, 1270)
+    .attr(`x`, 1240)
     .attr(`y`, y + 5)
     .text('Classroom 48'); 
 
-    y = 100;
+    y = 140;
 
     const legendry = g.selectAll('legendry')
     .data(data);
@@ -301,7 +327,7 @@ g.append('text')
     legendry.join('g')
     .attr('class', 'legendry')
     .attr('id','cross')
-    .attr('transform', d => `translate(1235, ${y})`)
+    .attr('transform', d => `translate(1205, ${y})`)
     .call(g => {
         g.each(function (d) {
             d3.select(this).append('path')
@@ -314,7 +340,7 @@ g.append('text')
     
     g.append('text')
         .attr('id', 'legend-text')
-        .attr(`x`, 1270)
+        .attr(`x`, 1240)
         .attr(`y`, y + 5)
         .text('Classroom 47'); 
 } 
